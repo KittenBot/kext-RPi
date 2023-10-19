@@ -33,7 +33,7 @@
             },
             pycode: "print([TEXT])"
         },
-        "## internal",
+
         {
             opcode: "cpu_temp",
             blockType: "reporter",

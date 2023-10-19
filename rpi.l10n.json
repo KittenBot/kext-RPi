@@ -1,0 +1,11 @@
+{
+    "en": {
+        "rosbotExt_description": "Power expansion board for Raspberry Pi"
+    },
+    "zh-cn": {
+        "rosbotExt_description": "兼容树莓派的动力扩展板，基于Mega328并采用串口方式通讯"
+    },
+    "zh-tw": {
+        "rosbotExt_description": "相容於樹莓派的動力擴充板，基於Mega328并採用串口方式通訊"
+    }
+}

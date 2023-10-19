@@ -1,11 +1,12 @@
 {
-  id: "rpi-rosbot",
-  name: "RPi ROSBot",
-  description: "Raspberry Pi ROSBot",
-  image: "rosbot.png",
+  id: "rpi_rosbotExt",
+  name: "Rosbot",
+  description: "$$rosbotExt_description",
+  image: "./_img/rosbot.png",
   color1: "#DE5277",
   color2: "#AA3F5B",
   color3: "#AA3F5B",
+  tags: ['actuator'],
   libs: {
     rosbot: {
       import: "from rosbot import *",
@@ -131,7 +132,7 @@
     {
         opcode: 'motordual',
         blockType: 'command',
-        text: '"Motor M1A[SPDM1A] M1B[SPDM1B]',
+        text: 'Motor M1A[SPDM1A] M1B[SPDM1B]',
         arguments: {
             SPDM1A: {
                 type: 'slider',

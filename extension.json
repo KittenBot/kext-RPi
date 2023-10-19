@@ -1,19 +1,22 @@
 {
-    "id": "kblockrpi",
-    "name": "Kblock RPI",
-    "version": "1.0.0",
-    "description": "Kblock for Raspberry Pi",
+    "id": "rpi",
+    "name": "Raspberry Pi",
+    "version": "1.0.1",
+    "description": "Kittenblock for Raspberry Pi",
     "type": "micropy",
-    "image": "rpi.png",
+    "masterExt": "rpi",
     "kittenext": true,
     "mainboard": true,
     "replmode": false,
-    "masterExt": "kblockrpi",
     "filesystem": "jsonrpc",
+    "color1": "#1E9E7A",
+    "color2": "#1B8B6C",
+    "color3": "#2F8C72",
+    "image": "rpi.png",
     "subextensions": [
-        "rosbot.json5"
+        "rosbotExt.json5"
     ],
     "loadedextensions": [
-        "rosbot.json5"
+        "rosbotExt.json5"
     ]
 }
