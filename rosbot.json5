@@ -1,0 +1,382 @@
+{
+  id: "rpi-rosbot",
+  name: "RPi ROSBot",
+  description: "Raspberry Pi ROSBot",
+  image: "rosbot.png",
+  color1: "#DE5277",
+  color2: "#AA3F5B",
+  color3: "#AA3F5B",
+  libs: {
+    rosbot: {
+      import: "from rosbot import *",
+      instance: "Rosbot()",
+    },
+  },
+  blocks: [
+    {
+        opcode: "pinmode",
+        blockType: "command",
+        text: "Set pin [PIN] as [MODE]",
+        arguments: {
+            PIN: {
+            type: "value",
+            defaultValue: "13",
+            },
+            MODE: {
+            type: "string",
+            defaultValue: "OUTPUT",
+            },
+        },
+        pycode: "rosbot.pinMode([PIN], [MODE])",
+    },
+    {
+        opcode: 'digitalwrite',
+        blockType: 'command',
+        text: 'Set digital pin [PIN] to [VALUE]',
+        arguments: {
+            PIN: {
+                type: 'string',
+                defaultValue: '13',
+                menu: 'rosbotPin'
+            },
+            VALUE: {
+                type: 'number',
+                menu: 'level',
+                defaultValue: '1'
+            }
+        },
+        pycode: 'rosbot.digitalWrite([PIN], [VALUE])',
+    },
+    {
+        opcode: 'analogwrite',
+        blockType: 'command',
+        text: 'Analog write pin [PIN] to [VALUE]',
+        arguments: {
+            PIN: {
+                type: 'string',
+                menu: 'analogWritePin',
+                defaultValue: '11'
+            },
+            VALUE: {
+                type: 'slider',
+                defaultValue: 120,
+                min: 0,
+                max: 255
+            }
+        },
+        pycode: 'rosbot.analogWrite([PIN], [VALUE])',
+    },
+    {
+        opcode: 'digitalread',
+        blockType: 'reporter',
+        text: 'Digital read pin [PIN]',
+        arguments: {
+            PIN: {
+                type: 'string',
+                defaultValue: '13',
+                menu: 'rosbotPin'
+            }
+        },
+        pycode: 'rosbot.digitalRead([PIN])',
+    },
+    {
+        opcode: 'analogread',
+        blockType: 'reporter',
+        text: 'Analog read pin [PIN]',
+        arguments: {
+            PIN: {
+                type: 'string',
+                defaultValue: 'A0',
+                menu: 'analogPin'
+            }
+        },
+        pycode: 'rosbot.analogRead([PIN])',
+    },
+    {
+        opcode: "led",
+        blockType: "command",
+        text: "LED [PIN] [VALUE]",
+        arguments: {
+            PIN: {
+            type: "value",
+            defaultValue: "13",
+            },
+            VALUE: {
+            type: "value",
+            defaultValue: "0",
+            },
+        },
+        pycode: 'rosbot.led([PIN], [VALUE])',
+    },
+    "## Actuator",
+    {
+        opcode: 'motorspeed',
+        blockType: 'command',
+        text: 'Set motor [MOTOR] speed to [SPEED]',
+        arguments: {
+            MOTOR: {
+                type: 'string',
+                menu: 'motorIndex',
+                defaultValue: '0'
+            },
+            SPEED: {
+                type: 'slider',
+                defaultValue: 100,
+                min: -255,
+                max: 255
+            }
+        },
+        pycode: 'rosbot.motorSpeed([MOTOR], [SPEED])',
+    },
+    {
+        opcode: 'motordual',
+        blockType: 'command',
+        text: '"Motor M1A[SPDM1A] M1B[SPDM1B]',
+        arguments: {
+            SPDM1A: {
+                type: 'slider',
+                defaultValue: 100,
+                min: -255,
+                max: 255
+            },
+            SPDM1B: {
+                type: 'slider',
+                defaultValue: 100,
+                min: -255,
+                max: 255
+            }
+        },
+        pycode: 'rosbot.motorDual([SPDM1A], [SPDM1B])',
+    },
+    {
+        opcode: 'motordualdelay',
+        blockType: 'command',
+        text: 'Motor M1A[SPDM1A] M1B[SPDM1B] Delay[DELAY]ms',
+        arguments: {
+            SPDM1A: {
+                type: 'slider',
+                defaultValue: 100,
+                min: -255,
+                max: 255
+            },
+            SPDM1B: {
+                type: 'slider',
+                defaultValue: 100,
+                min: -255,
+                max: 255
+            },
+            DELAY: {
+                type: 'number',
+                defaultValue: 500
+            }
+        },
+        pycode: 'rosbot.motorDual([SPDM1A], [SPDM1B], [DELAY])',
+    },
+    {
+        opcode: 'motorfour',
+        blockType: 'command',
+
+        text: 'Motor M1A[SPDM1A] M1B[SPDM1B] M2A[SPDM2A] M2B[SPDM2B]',
+        arguments: {
+            SPDM1A: {
+                type: 'slider',
+                defaultValue: 50,
+                min: -255,
+                max: 255
+            },
+            SPDM1B: {
+                type: 'slider',
+                defaultValue: 50,
+                min: -255,
+                max: 255
+            },
+            SPDM2A: {
+                type: 'slider',
+                defaultValue: -50,
+                min: -255,
+                max: 255
+            },
+            SPDM2B: {
+                type: 'slider',
+                defaultValue: -50,
+                min: -255,
+                max: 255
+            }
+        },
+        pycode: 'rosbot.motorQuad([SPDM1A], [SPDM1B], [SPDM2A], [SPDM2B])',
+    },
+    {
+        opcode: 'motorstop',
+        blockType: 'command',
+        text: 'Motor stop',
+        pycode: 'rosbot.motorStop()',
+    },
+    {
+        opcode: 'servo',
+        blockType: 'command',
+        text: 'Servo [PIN] angle [DEGREE] speed [SPEED]',
+        arguments: {
+            PIN: {
+                type: 'string',
+                defaultValue: '4',
+                menu: 'extPin'
+            },
+            DEGREE: {
+                type: 'slider',
+                defaultValue: 90,
+                min: 0,
+                max: 180
+            },
+            SPEED: {
+                type: 'slider',
+                defaultValue: 128,
+                min: 0,
+                max: 255
+            }
+        },
+        pycode: 'rosbot.servo([PIN], [DEGREE], [SPEED])',
+    }
+  ],
+  menus: {
+    pinMode: [
+      { text: "INPUT", value: "0" },
+      { text: "OUTPUT", value: "1" },
+      { text: "INPUT_PULLUP", value: "2" },
+    ],
+    level: [
+      { text: "HIGH", value: 1 },
+      { text: "LOW", value: 0 },
+    ],
+    onoff: [
+      { text: "ON", value: "0" },
+      { text: "OFF", value: "1" },
+    ],
+    motorIndex: [
+      { text: "M1A", value: "0" },
+      { text: "M1B", value: "1" },
+      { text: "M2A", value: "2" },
+      { text: "M2B", value: "3" },
+    ],
+    blinkCmd: ["blink", "stop"],
+    digiPin: [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5",
+    ],
+    extPin: [
+      { text: "4", value: "0" },
+      { text: "7", value: "1" },
+      { text: "8", value: "2" },
+      { text: "11", value: "3" },
+      { text: "12", value: "4" },
+      { text: "13", value: "5" },
+      { text: "A0", value: "6" },
+      { text: "A1", value: "7" },
+      { text: "A2", value: "8" },
+      { text: "A3", value: "9" },
+    ],
+    rosbotPin: [
+      { text: "2", value: "2" },
+      { text: "3", value: "3" },
+      { text: "4", value: "4" },
+      { text: "5", value: "5" },
+      { text: "6", value: "6" },
+      { text: "7", value: "7" },
+      { text: "8", value: "8" },
+      { text: "9", value: "9" },
+      { text: "10", value: "10" },
+      { text: "11", value: "11" },
+      { text: "12", value: "12" },
+      { text: "13", value: "13" },
+      { text: "A0", value: "A0" },
+      { text: "A1", value: "A1" },
+      { text: "A2", value: "A2" },
+      { text: "A3", value: "A3" },
+      { text: "A4", value: "A4" },
+      { text: "A5", value: "A5" },
+    ],
+    analogPin: ["A0", "A1", "A2", "A3", "A4", "A5"],
+    analogWritePin: ["3", "5", "6", "9", "10", "11"],
+    ledonoff: [
+      { text: "ON", value: "0" },
+      { text: "OFF", value: "1" },
+    ],
+    serialtype: [
+      { text: "Serial", value: "Serial" },
+      { text: "Soft Serial", value: "softser" },
+    ],
+    axisList: [
+      { text: "L-X", value: "7" },
+      { text: "L-Y", value: "8" },
+      { text: "R-X", value: "5" },
+      { text: "R-Y", value: "6" },
+    ],
+    StrTypo: ["HEX", "BIN", "DEC"],
+    Typo: ["byte", "char", "int", "long", "word", "float"],
+    // 'UP', 'DOWN'
+    volumnList: [
+      { text: "UP", value: "0, 1" },
+      { text: "DOWN", value: "1, 0" },
+    ],
+    // 'NEXT', 'PREVIOUS'
+    mp3direction: [
+      { text: "NEXT", value: "0, 1" },
+      { text: "PREVIOUS", value: "1, 0" },
+    ],
+    buttonList: [
+      { text: "→", value: 9 },
+      { text: "↑", value: 11 },
+      { text: "↓", value: 12 },
+      { text: "←", value: 10 },
+
+      { text: "▲", value: 13 },
+      { text: "●", value: 14 },
+      { text: "×", value: 15 },
+      { text: "■", value: 16 },
+
+      { text: "L2", value: 19 },
+      { text: "R2", value: 20 },
+      { text: "L1", value: 17 },
+      { text: "R1", value: 18 },
+    ],
+    rgbPix: [
+      { text: "ALL", value: 0 },
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+    ],
+    PRINT_TYPE: [
+      { text: "不换行", value: "print" },
+      { text: "换行", value: "println" },
+    ],
+  },
+}

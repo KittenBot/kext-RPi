@@ -1,0 +1,287 @@
+{
+    // refer: https://gpiozero.readthedocs.io/en/stable/index.html
+    libs: {
+        "*": {
+            import: "from gpiozero import *"
+        },
+        "meowPin_[PIN]": {
+            import: "from meowPin import *",
+            instance: "MeowPin([PIN])"
+        },
+        "I2C": {
+            import: "from meowI2C import *",
+            instance: "MeowI2C()"
+        },
+        "cputemp": {
+            
+            instance: "CPUTemperature()"
+        },
+        "cpuload": {
+            instance: "LoadAverage()"
+        }
+    },
+    blocks: [
+        {
+            opcode: "print",
+            blockType: "command",
+            text: "print [TEXT]",
+            arguments: {
+                TEXT: {
+                    type: "string",
+                    defaultValue: "hello world"
+                }
+            },
+            pycode: "print([TEXT])"
+        },
+        "## internal",
+        {
+            opcode: "cpu_temp",
+            blockType: "reporter",
+            text: "cpu temperature",
+            pycode: "cputemp.temperature"
+        },
+        {
+            opcode: "cpu_load",
+            blockType: "reporter",
+            text: "cpu load",
+            pycode: "cpuload.value"
+        },
+        "## GPIO",
+        {
+            opcode: "gpio_write",
+            blockType: "command",
+            text: "set pin [PIN] to [STATE]",
+            arguments: {
+                PIN: {
+                    type: "number",
+                    defaultValue: 2
+                },
+                STATE: {
+                    type: "number",
+                    menu: "HL",
+                    defaultValue: "1"
+                }
+            },
+            pycode: "meowPin_[PIN].writeDigital([STATE])"
+        },
+        {
+            opcode: "gpio_read",
+            blockType: "reporter",
+            text: "get the level of pin [PIN]",
+            arguments: {
+                PIN: {
+                    type: "number",
+                    defaultValue: 2
+                }
+            },
+            pycode: "meowPin_[PIN].readDigital()"
+        },
+        {
+            opcode: "gpio_setFrequency",
+            blockType: "command", 
+            text: "set pin [PIN] pwm frequency to [FREQUENCY]",
+            arguments: {
+                PIN: {
+                    type: "number",
+                    defaultValue: 2
+                },
+                FREQUENCY: {
+                    type: "number",
+                    defaultValue: 100
+                }
+            },
+            pycode: "meowPin_[PIN].setFrequency([FREQUENCY])"
+        },
+        {
+            opcode: "gpio_setDutyfactor",
+            blockType: "command", 
+            text: "set pin [PIN] pwm duty cycle to [DUTYFACTOR]",
+            arguments: {
+                PIN: {
+                    type: "number",
+                    defaultValue: 2
+                },
+                DUTYFACTOR: {
+                    type: "number",
+                    defaultValue: 50
+                }
+            },
+            pycode: "meowPin_[PIN].setDutyfactor([DUTYFACTOR])"
+        },
+        "## UART",
+        {
+            opcode: "uart_init",
+            blockType: "command", 
+            micropy:{
+                import: "from meowUart import *"
+            },
+            text: "Initializing UART[ID] device [DEVICE] Baud rate [BAUDRATE]",
+            arguments: {
+                ID: {
+                    type: "number",
+                    defaultValue: 1
+                },
+                DEVICE: {
+                    type: "string",
+                    defaultValue: '/dev/ttyAMA0'
+                },
+                BAUDRATE: {
+                    type: "number",
+                    defaultValue: 115200
+                }
+            },
+            pycode: "uart_[ID] = MeowUart([DEVICE],[BAUDRATE])"
+        },
+        {
+            opcode: "uart_writeString",
+            blockType: "command",
+            text: "UART[ID] write string [TEXT]",
+            arguments: {
+                ID: {
+                    type: "number",
+                    defaultValue: 1
+                },
+                TEXT: {
+                    type: "string",
+                    defaultValue: 'hello kitten'
+                },
+            },
+            pycode: "uart_[ID].writeString([TEXT])"
+        },
+        {
+            opcode: "uart_writeByte",
+            blockType: "command",
+            text: "UART[ID] write byte [BYTE]",
+            arguments: {
+                ID: {
+                    type: "number",
+                    defaultValue: 1
+                },
+                BYTE: {
+                    type: "value",
+                    defaultValue: "b'\\x01\\x02\\x03'"
+                },
+            },
+            pycode: "uart_[ID].writeByte([BYTE])"
+        },
+        {
+            opcode: "uart_haveDate",
+            blockType: 'boolean',
+            text: "UART[ID] have data?",
+            arguments: {
+                ID: {
+                    type: "number",
+                    defaultValue: 1
+                },
+            },
+            pycode: "uart_[ID].ifData()"
+        },
+        {
+            opcode: "uart_readAll",
+            blockType: 'reporter',
+            text: "UART[ID] read all string",
+            arguments: {
+                ID: {
+                    type: "number",
+                    defaultValue: 1
+                },
+            },
+            pycode: "uart_[ID].readString()"
+        },        
+        {
+            opcode: "uart_readLine",
+            blockType: 'reporter',
+            text: "UART[ID] read line string",
+            arguments: {
+                ID: {
+                    type: "number",
+                    defaultValue: 1
+                },
+            },
+            pycode: "uart_[ID].readStringLine()"
+        },
+        {
+            opcode: "uart_readByte",
+            blockType: 'reporter',
+            text: "UART[ID] read byte",
+            arguments: {
+                ID: {
+                    type: "number",
+                    defaultValue: 1
+                },
+            },
+            pycode: "uart_[ID].readByte()"
+        },
+        "## I2C",
+        {
+            opcode: "i2c_writeByte",
+            blockType: 'command',
+            text: "write data for address[ADDR]",
+            arguments: {
+                ADDR: {
+                    type: "number",
+                    defaultValue: '0x01'
+                },
+            },
+            pycode: "i2c.writeByteByte()"
+        },
+        {
+            opcode: "i2c_readByte",
+            blockType: 'reporter',
+            text: "read data for address[ADDR]",
+            arguments: {
+                ADDR: {
+                    type: "number",
+                    defaultValue: '0x01'
+                },
+            },
+            pycode: "i2c.readByte()"
+        },
+        {
+            opcode: "i2c_writeBlockData",
+            blockType: 'command',
+            text: "write data for address[ADDR] register[REGISTER] data[DATA]",
+            arguments: {
+                ADDR: {
+                    type: "number",
+                    defaultValue: '0x01'
+                },
+                REGISTER: {
+                    type: "number",
+                    defaultValue: '0X02'
+                },
+                DATA: {
+                    type: "number",
+                    defaultValue: 1
+                },
+            },
+            pycode: "i2c.writeBlockData([ADDR],[REGISTER],[DATA])"
+        },
+        {
+            opcode: "i2c_readBlockData",
+            blockType: 'reporter',
+            text: "read data for address[ADDR] register[REGISTER] len[LEN]",
+            arguments: {
+                ADDR: {
+                    type: "number",
+                    defaultValue: '0x01'
+                },
+                REGISTER: {
+                    type: "number",
+                    defaultValue: '0X02'
+                },
+                LEN: {
+                    type: "number",
+                    defaultValue: 1
+                },
+            },
+            pycode: "i2c.readBlockData([ADDR],[REGISTER],[LEN])"
+        },
+    ],
+    menus: {
+        HL: [
+            { text: 'HIGH', value: '1' },
+            { text: 'LOW', value: '0' }
+        ],
+    }
+}

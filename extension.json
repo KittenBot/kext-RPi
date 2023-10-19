@@ -1,0 +1,19 @@
+{
+    "id": "kblockrpi",
+    "name": "Kblock RPI",
+    "version": "1.0.0",
+    "description": "Kblock for Raspberry Pi",
+    "type": "micropy",
+    "image": "rpi.png",
+    "kittenext": true,
+    "mainboard": true,
+    "replmode": false,
+    "masterExt": "kblockrpi",
+    "filesystem": "jsonrpc",
+    "subextensions": [
+        "rosbot.json5"
+    ],
+    "loadedextensions": [
+        "rosbot.json5"
+    ]
+}
