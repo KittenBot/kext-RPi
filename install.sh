@@ -1,13 +1,7 @@
 #!/bin/bash
 
-# Check if Python is installed
-command -v python3 >/dev/null 2>&1 || { echo >&2 "Python 3 is required but it's not installed. Aborting."; exit 1; }
-
 # Install necessary Python libraries
 pip3 install aiohttp arduinobootloader intelhex
-
-# Clone
-git clone https://github.com/kittenbot/kext-rpi.git
 
 # Change directory
 cd kext-rpi
