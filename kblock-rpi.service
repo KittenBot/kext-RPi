@@ -1,0 +1,14 @@
+[Unit]
+Description=Kblock Rpi Server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/zy/kext-RPi/server.py
+WorkingDirectory=/home/zy/kext-RPi
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=zy
+
+[Install]
+WantedBy=multi-user.target

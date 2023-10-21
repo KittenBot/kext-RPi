@@ -3,9 +3,6 @@
 # Install necessary Python libraries
 pip3 install aiohttp arduinobootloader intelhex
 
-# Change directory
-cd kext-rpi
-
 # Create a systemd service
 echo "[Unit]
 Description=Kblock Rpi Server
