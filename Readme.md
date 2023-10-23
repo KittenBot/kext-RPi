@@ -47,4 +47,4 @@ echo "M2 13 1\r\n" > /dev/ttyAMA0
 
 
 
-| Note: To compile the communication firmware from source please refer to [kext-rosbot]().
+| Note: To compile the communication firmware from source please refer to [kext-rosbot](https://github.com/KittenBot/kext-rosbot).
