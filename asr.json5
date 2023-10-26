@@ -1,0 +1,273 @@
+{
+  id: "rpi_ASRExt",
+  name: "ASR",
+  description: "voice recognition module",
+  image: "./_img/asr.png",
+  color1: "#30caf9",
+  color2: "#1cb1e5",
+  color3: "#2daae0",
+  tags: ['actuator'],
+  libs: {
+    '*': {
+      import: "from kittenbot.ASR import *",
+    },
+  },
+  blocks: [
+    {
+        opcode: "ASRInit",
+        blockType: "command",
+        text: "ASR init port [PORT]",
+        arguments: {
+            PORT: {
+                type: "string",
+                defaultValue: "/dev/ttyS0",
+            },
+        },
+        pycode: "asr = SugarASR(port=[PORT])",
+    },
+    {
+        opcode: "ASRDetected",
+        blockType: "Boolean",
+        text: "ASR Is the command detected?",
+        pycode: "asr.detected()",
+    },
+    {
+        opcode: "ASRLedCommand",
+        blockType: "Boolean",
+        text: "Light control identified [CMD]",
+        arguments: {
+            CMD: {
+                type: "string",
+                defaultValue: "light_on",
+                menu: "led_cmd"
+            },
+        },
+        pycode: "asr.cmd == [CMD]",
+    },
+    {
+        opcode: "ASRActuatorCommand",
+        blockType: "Boolean",
+        text: "Actuator control identified [CMD]",
+        arguments: {
+            CMD: {
+                type: "string",
+                defaultValue: "open_door",
+                menu: "actuator_cmd"
+            },
+        },
+        pycode: "asr.cmd == [CMD]",
+    },
+    {
+        opcode: "ASRQueryCommand",
+        blockType: "Boolean",
+        text: "Query statement detection [CMD]",
+        arguments: {
+            CMD: {
+                type: "string",
+                defaultValue: "check_temperature",
+                menu: "query_cmd"
+            },
+        },
+        pycode: "asr.cmd == [CMD]",
+    },
+    {
+        opcode: "ASRcustomizeCommand",
+        blockType: "Boolean",
+        text: "customize statement detection [CMD]",
+        arguments: {
+            CMD: {
+                type: "string",
+                defaultValue: "command_one",
+                menu: "customize_cmd"
+            },
+        },
+        pycode: "asr.cmd == [CMD]",
+    },
+    "---",
+    {
+        opcode: "ASRTTSCommand",
+        blockType: "command",
+        text: "Text to Speech [CMD]",
+        arguments: {
+            CMD: {
+                type: "string",
+                defaultValue: "temperature_is",
+                menu: "tts_cmd"
+            },
+        },
+        pycode: "asr.tts_words([CMD])",
+    },
+    {
+        opcode: "ASRTTSInt",
+        blockType: "command",
+        text: "Text to integer [CMD]",
+        arguments: {
+            CMD: {
+                type: "number",
+                defaultValue: 12,
+            },
+        },
+        pycode: "asr.tts_integer([CMD])",
+    },
+    {
+        opcode: "ASRTTSDouble",
+        blockType: "command",
+        text: "Text to double [CMD]",
+        arguments: {
+            CMD: {
+                type: "number",
+                defaultValue: 12.56,
+            },
+        },
+        pycode: "asr.tts_double([CMD])",
+    },
+    {
+        opcode: "ASRTTSDate",
+        blockType: "command",
+        text: "Text to Date Year[Y] month[M] day[D]",
+        arguments: {
+            Y: {
+                type: "number",
+                defaultValue: 2023,
+            },
+            M: {
+                type: "number",
+                defaultValue: 10,
+            },
+            D: {
+                type: "number",
+                defaultValue: 24,
+            },
+        },
+        pycode: "asr.tts_date([Y],[M],[D])",
+    },
+    {
+        opcode: "ASRTTSTime",
+        blockType: "command",
+        text: "Text to Time hour[H] minute[M]",
+        arguments: {
+            H: {
+                type: "number",
+                defaultValue: 16,
+            },
+            M: {
+                type: "number",
+                defaultValue: 31,
+            },
+        },
+        pycode: "asr.tts_time([H],[M])",
+    },
+  ],
+  menus: {
+    led_cmd: [
+        "light_on",
+        "light_off",
+        "brighter",
+        "dimmer",
+        "red_light_on",
+        "green_light_on",
+        "yellow_light_on",
+        "blue_light_on",
+        "sitting_room_light_on",
+        "sitting_room_light_off",
+        "kitchen_light_on",
+        "kitchen_light_off",
+        "bedroom_light_on",
+        "bedroom_light_off",
+        "balcony_light_on",
+        "balcony_light_off",
+        "bathroom_light_on",
+        "bathroom_light_off",
+        "all_light_on",
+        "all_light_off"
+    ],
+    actuator_cmd: [
+        "open_door",
+        "close_door",
+        "open_window",
+        "close_window",
+        "open_curtains",
+        "close_curtains",
+        "hanger_out",
+        "hanger_in_",
+        "fan_on",
+        "fan_off",
+        "speed_up",
+        "slow_down",
+        "air_conditioner_on",
+        "air_conditioner_off",
+        "music_on",
+        "music_off",
+        "pause",
+        "previous_song",
+        "next_song",
+        "volume_up",
+        "volume_down",
+        "robot_on",
+        "robot_off",
+        "robot_stop",
+        "move_forward",
+        "move_backward",
+        "turn_left",
+        "turn_right",
+        "lift_on",
+        "first_floor",
+        "second_floor",
+        "third_floor"
+    ],
+    query_cmd: [
+        "check_temperature",
+        "check_humidity",
+        "check_weather",
+        "check_time",
+        "check_date",
+        "measure_distance",
+        "measure_temperature",
+        "measure_weight",
+        "measure_height"
+    ],
+    customize_cmd: [
+	    "command_one",
+	    "command_two",
+	    "command_three",
+	    "command_four",
+	    "command_five",
+	    "command_six",
+	    "command_seven",
+	    "command_eight",
+	    "command_nine",
+	    "command_ten"
+    ],
+    tts_cmd: [
+        "temperature_is",
+        "Humidity_is",
+        "welcome",
+        "distance_is",
+        "millimeter",
+        "centimeter",
+        "meter",
+        "body_temperature_is",
+        "weight_is",
+        "gram",
+        "kilogram",
+        "please_say_the_password",
+        "The_weather_is",
+        "sunny",
+        "cloudy",
+        "raining",
+        "snowing",
+        "haze",
+        "big",
+        "middle",
+        "small",
+        "which_floor_are_you_going_to",
+        "yes",
+        "no",
+        "percent",
+        "You_are_right",
+        "You_are_wrong",
+        "degrees",
+        "ok"
+    ]
+  },
+}

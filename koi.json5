@@ -1,0 +1,342 @@
+{
+  id: "rpi_KOIExt",
+  name: "KOI",
+  description: "Artificial intelligence",
+  image: "./_img/koi.png",
+  color1: "#30caf9",
+  color2: "#1cb1e5",
+  color3: "#2daae0",
+  tags: ['actuator'],
+  libs: {
+    '*': {
+      import: "from kittenbot.KOI import *",
+    },
+  },
+  blocks: [
+    "## Basics",
+    {
+        opcode: "KOIInit",
+        blockType: "command",
+        text: "KOI init port [PORT]",
+        arguments: {
+            PORT: {
+                type: "string",
+                defaultValue: "/dev/ttyS0",
+            },
+        },
+        pycode: "koi = KOI([PORT])",
+    },
+    {
+        opcode: "KOIReset",
+        blockType: "command",
+        text: "KOI reset",
+        pycode: "koi.reset()",
+    },
+    {
+        opcode: "KOIStop",
+        blockType: "command",
+        text: "KOI Stop mode",
+        pycode: "koi.stop_kpu()",
+    },
+    {
+        opcode: "KOIScreenMode",
+        blockType: "command",
+        text: "KOI screen mode [DIR]",
+        arguments: {
+            DIR: {
+                type: "number",
+                defaultValue: 0,
+                menu:"screenDir"
+            },
+        },
+        pycode: "koi.screen_mode([DIR])",
+    },
+    {
+        opcode: "KOIDisplayText",
+        blockType: "command",
+        text: "KOI x:[X],y:[Y],[MS]ms,content:[TEXT]",
+        arguments: {
+            X: {
+                type: "number",
+                defaultValue: 0,
+            },
+            Y: {
+                type: "number",
+                defaultValue: 0,
+            },
+            MS: {
+                type: "number",
+                defaultValue: 500,
+            },
+            TEXT: {
+                type: "string",
+                defaultValue: "hello",
+            },
+        },
+        pycode: "koi.display_text([X],[Y],[MS],[TEXT])",
+    },
+    {
+        opcode: "KOISavePic",
+        blockType: "command",
+        text: "Take a picture [PIC]",
+        arguments: {
+            PIC: {
+                type: "string",
+                defaultValue: "abc.jpg",
+            },
+        },
+        pycode: "koi.screen_save([PIC])",
+    },
+    {
+        opcode: "KOIShowPic",
+        blockType: "command",
+        text: "show picture [PIC]",
+        arguments: {
+            PIC: {
+                type: "string",
+                defaultValue: "abc.jpg",
+            },
+        },
+        pycode: "koi.screen_show([PIC])",
+    },
+    "## Face tracking",
+    {
+        opcode: "faceInit",
+        blockType: "command",
+        text: "KOI face tracking init",
+        pycode: "koi.face_yolo_init()",
+    },
+    {
+        opcode: "faceCoord",
+        blockType: "reporter",
+        text: "KOI face coordinate [shaft]",
+        arguments: {
+            shaft: {
+                type: "string",
+                defaultValue: "x",
+                menu:"coord"
+            },
+        },
+        pycode: "koi.get_face_coord()[[shaft]]",
+    },
+    {
+        opcode: "faceNumber",
+        blockType: "reporter",
+        text: "KOI face number",
+        pycode: "koi.get_face_number()",
+    },
+    "## Feature classification",
+    {
+        opcode: "clsInit",
+        blockType: "command",
+        text: "KOI feature classification init",
+        pycode: "koi.cls_init()",
+    },
+    {
+        opcode: "clsAddTag",
+        blockType: "command",
+        text: "KOI feature classification add tag [TAG]",
+        arguments: {
+            TAG: {
+                type: "string",
+                defaultValue: "tagA",
+            },
+        },
+        pycode: "koi.cls_add_tag([TAG])",
+    },
+    {
+        opcode: "clsRun",
+        blockType: "reporter",
+        text: "KOI feature classification run",
+        pycode: "koi.cls_run()",
+    },
+    {
+        opcode: "clsSaveModel",
+        blockType: "command",
+        text: "save feature classification mode [MODE]",
+        arguments: {
+            MODE: {
+                type: "string",
+                defaultValue: "abc.json",
+            },
+        },
+        pycode: "koi.cls_save_model([MODE])",
+    },
+    {
+        opcode: "clsLoadModel",
+        blockType: "command",
+        text: "load feature classification mode [MODE]",
+        arguments: {
+            MODE: {
+                type: "string",
+                defaultValue: "abc.json",
+            },
+        },
+        pycode: "koi.cls_load_model([MODE])",
+    },
+    "## Audio",
+    {
+        opcode: "audioRecord",
+        blockType: "command",
+        text: "audio record [FILE]",
+        arguments: {
+            FILE: {
+                type: "string",
+                defaultValue: "test.wav",
+            },
+        },
+        pycode: "koi.audio_record([FILE])",
+    },
+    {
+        opcode: "audioPlay",
+        blockType: "command",
+        text: "audio play [FILE]",
+        arguments: {
+            FILE: {
+                type: "string",
+                defaultValue: "test.wav",
+            },
+        },
+        pycode: "koi.audio_play([FILE])",
+    },
+    {
+        opcode: "asrCalibration",
+        blockType: "command",
+        text: "KOI Voice command calibration",
+        pycode: "koi.audio_noisetap()",
+    },
+    {
+        opcode: "asrAddTag",
+        blockType: "command",
+        text: "KOI Voice command add tag [TGA]",
+        arguments: {
+            TGA: {
+                type: "string",
+                defaultValue: "tgaA",
+            },
+        },
+        pycode: "koi.speech_add_tag([TGA])",
+    },    
+    {
+        opcode: "asrRun",
+        blockType: "command",
+        text: "KOI Voice command run",
+        pycode: "koi.speech_run()",
+    }, 
+    {
+        opcode: "asrSaveModel",
+        blockType: "command",
+        text: "save Voice command mode [MODE]",
+        arguments: {
+            MODE: {
+                type: "string",
+                defaultValue: "audio.json",
+            },
+        },
+        pycode: "koi.speech_save_model([MODE])",
+    },
+    {
+        opcode: "asrLoadModel",
+        blockType: "command",
+        text: "load Voice command mode [MODE]",
+        arguments: {
+            MODE: {
+                type: "string",
+                defaultValue: "audio.json",
+            },
+        },
+        pycode: "koi.speech_load_model([MODE])",
+    },
+    "## Color tracking",
+    {
+        opcode: "colorTraceCalibration",
+        blockType: "command",
+        text: "KOI color trace calibration [C]",
+        arguments: {
+            C: {
+                type: "string",
+                defaultValue: "colorA",
+            },
+        },
+        pycode: "koi.color_cali([C])",
+    },    
+    {
+        opcode: "colorTraceCoord",
+        blockType: "reporter",
+        text: "KOI color trace [C] get coords",
+        arguments: {
+            C: {
+                type: "string",
+                defaultValue: "colorA",
+            },
+        },
+        pycode: "koi.color_tracking([C])",
+    },     
+    {
+        opcode: "lineTraceCoord",
+        blockType: "reporter",
+        text: "KOI line trace [line] get coords",
+        arguments: {
+            line: {
+                type: "string",
+                defaultValue: "colorA",
+            },
+        },
+        pycode: "koi.line_tracking([line])",
+    },   
+    "## shape tracking",
+    {
+        opcode: "circleDetect",
+        blockType: "reporter",
+        text: "circle detect threshold value[THRESHOLD]",
+        arguments: {
+            THRESHOLD: {
+                type: "number",
+                defaultValue: 2000,
+            },
+        },
+        pycode: "koi.circle_detect([THRESHOLD])",
+    },
+    {
+        opcode: "rectangleDetect",
+        blockType: "reporter",
+        text: "rectangle detect threshold value[THRESHOLD]",
+        arguments: {
+            THRESHOLD: {
+                type: "number",
+                defaultValue: 2000,
+            },
+        },
+        pycode: "koi.rectangle_detect([THRESHOLD])",
+    }, 
+    "## scan codes",
+    {
+        opcode: "scanQrcode",
+        blockType: "reporter",
+        text: "scan QR code",
+        pycode: "koi.scan_qrcode()",
+    }, 
+    {
+        opcode: "scanBarcode",
+        blockType: "reporter",
+        text: "scan bar code",
+        pycode: "koi.scan_barcode()",
+    },
+    {
+        opcode: "scan_apriltag",
+        blockType: "reporter",
+        text: "scan apriltag code",
+        pycode: "koi.scan_apriltag()",
+    }, 
+
+  ],
+  menus: {
+    screenDir:[
+      { text: 'black', value: 0},
+      { text: 'front', value: 2}
+    ],
+    coord:[
+      "x","y"
+    ]
+  },
+}

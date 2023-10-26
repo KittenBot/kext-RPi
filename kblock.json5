@@ -219,7 +219,7 @@
             text: "write data for address[ADDR]",
             arguments: {
                 ADDR: {
-                    type: "number",
+                    type: "value",
                     defaultValue: '0x01'
                 },
             },
@@ -231,7 +231,7 @@
             text: "read data for address[ADDR]",
             arguments: {
                 ADDR: {
-                    type: "number",
+                    type: "value",
                     defaultValue: '0x01'
                 },
             },
@@ -243,16 +243,16 @@
             text: "write data for address[ADDR] register[REGISTER] data[DATA]",
             arguments: {
                 ADDR: {
-                    type: "number",
+                    type: "value",
                     defaultValue: '0x01'
                 },
                 REGISTER: {
-                    type: "number",
+                    type: "value",
                     defaultValue: '0X02'
                 },
                 DATA: {
-                    type: "number",
-                    defaultValue: 1
+                    type: "value",
+                    defaultValue: '0x01'
                 },
             },
             pycode: "i2c.writeBlockData([ADDR],[REGISTER],[DATA])"
@@ -263,11 +263,11 @@
             text: "read data for address[ADDR] register[REGISTER] len[LEN]",
             arguments: {
                 ADDR: {
-                    type: "number",
+                    type: "value",
                     defaultValue: '0x01'
                 },
                 REGISTER: {
-                    type: "number",
+                    type: "value",
                     defaultValue: '0X02'
                 },
                 LEN: {

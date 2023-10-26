@@ -14,9 +14,11 @@
     "color3": "#2F8C72",
     "image": "rpi.png",
     "subextensions": [
-        "rosbotExt.json5"
+        "rosbot.json5",
+        "asr.json5"
     ],
     "loadedextensions": [
-        "rosbotExt.json5"
+        "rosbot.json5",
+        "asr.json5"
     ]
 }
